@@ -36,20 +36,14 @@ class BST{
   }
 
   lookup(value){
-    
-}
-
-const myBST = new BST();
-myBST.insert(50);
-myBST.insert(25);
-myBST.insert(75);
-myBST.insert(10);
-myBST.insert(35);
-myBST.insert(30);
-
-
+    let currentNode = this.root;
+    while(currentNode){
+      if(currentNode.value === value) return currentNode;
+      else if(currentNode.value > value) currentNode = currentNode.left;
+      else if(currentNode.value < value) currentNode = currentNode.right;
+    }
+    return false;
   }
-
 }
 
 const myBST = new BST();
@@ -62,8 +56,8 @@ myBST.insert(30);
 myBST.insert(70);
 myBST.insert(100);
 myBST.insert(90);
-
-JSON.stringify(traverse(myBST.root))
+myBST.lookup(10)
+// JSON.stringify(traverse(myBST.root))
 
 
 function traverse(node) {
