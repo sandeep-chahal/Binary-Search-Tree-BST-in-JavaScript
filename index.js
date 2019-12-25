@@ -44,6 +44,87 @@ class BST{
     }
     return false;
   }
+
+  remove(value){
+    if(!this.root) return false;
+    let currentNode = this.root;
+    let parent = null;
+    let replacingNode = null;
+    let replacingParent = null;
+    while(true){
+
+      if(currentNode.value === value){
+        // if it's leaf node
+        if(currentNode.left === null && currentNode.right === null){
+          if(parent.value > value){
+            parent.left = null;
+          }else{
+            parent.right = null;
+          }
+          return this;
+        }
+
+        // if it doesn't have right node
+        if(currentNode.right === null){
+          if(parent.value > value){
+            parent.left = currentNode.left;
+          }else{
+            parent.right = currentNode.left;
+          }
+          return this;
+        }else{     //if it have both left and right node
+          replacingNode = currentNode.right;
+          replacingParent = currentNode;
+          while(replacingNode.left !== null){
+            replacingParent = replacingNode;
+            replacingNode = replacingNode.left;
+          }
+          if(value === this.root.value){
+
+
+            return this;
+          }
+          if(currentNode.right === replacingNode){
+            replacingNode.left = currentNode.left;
+            if(parent.value > value){
+              parent.left = replacingNode
+            }else if(parent.value < value){
+              parent.right = replacingNode;
+            }
+            return this;
+          }
+          if(parent.value > value){
+            let replLeft = replacingNode.left;
+            replacingNode.left = currentNode.left;
+            replacingNode.right = currentNode.right;
+            replacingParent.left = replLeft;
+            parent.left = replacingNode;
+          }else if(parent.value < value){
+            let replLeft = replacingNode.left;
+            replacingNode.left = currentNode.left;
+            replacingNode.right = currentNode.right;
+            replacingParent.left = replLeft;
+            parent.right = replacingNode;
+            
+
+          }
+          return this;
+        }
+
+      }
+      else if(currentNode.value > value){
+        parent = currentNode;
+        currentNode = currentNode.left;
+      } 
+      else if(currentNode.value < value){
+        parent = currentNode;
+        currentNode = currentNode.right;
+      }
+    }
+  return false;
+
+  }
+
 }
 
 const myBST = new BST();
@@ -56,7 +137,7 @@ myBST.insert(30);
 myBST.insert(70);
 myBST.insert(100);
 myBST.insert(90);
-myBST.lookup(10)
+myBST.remove(50);
 // JSON.stringify(traverse(myBST.root))
 
 
